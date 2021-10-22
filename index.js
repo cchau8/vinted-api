@@ -5,15 +5,17 @@ const formidable = require("express-formidable");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cloudinary = require("cloudinary").v2;
+const cors = require("cors");
 
 // création de l'app et utilisation des modules
 const app = express();
 app.use(formidable());
 app.use(morgan("dev"));
+app.use(cors());
 
 // connexion à la DB
-mongoose.connect("mongodb://localhost:27017/vinted");
-
+mongoose.connect(process.env.MONGO_DB_URI);
+console.log(process.env.MONGO_DB_URI);
 // connexion à cloudinary
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
