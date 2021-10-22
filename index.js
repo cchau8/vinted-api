@@ -23,6 +23,11 @@ cloudinary.config({
 	api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Test route /
+app.get("/", (req, res) => {
+	res.send("Welcome to my vinted API !");
+});
+
 // import et use des routes
 const userRoutes = require("./routes/user");
 const offerRoutes = require("./routes/offer");
@@ -35,6 +40,6 @@ app.all("*", (req, res) => {
 });
 
 // lancement du serveur sur le port 3000
-app.listen(3000, () => {
+app.listen(PORT, () => {
 	console.log("Server has started.");
 });
