@@ -15,7 +15,7 @@ app.use(cors());
 
 // connexion à la DB
 mongoose.connect(process.env.MONGO_DB_URI);
-console.log(process.env.MONGO_DB_URI);
+
 // connexion à cloudinary
 cloudinary.config({
 	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
