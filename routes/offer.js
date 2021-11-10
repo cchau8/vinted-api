@@ -135,7 +135,7 @@ router.get("/offers", async (req, res) => {
 			limit = Number(req.query.limit);
 		}
 		const offers = await Offer.find(filters)
-			.select("product_name product_price")
+			.select()
 			.sort(sortPrice)
 			.limit(req.query.page ? limit : 0)
 			.skip((pageNb - 1) * limit);
