@@ -135,6 +135,7 @@ router.get("/offers", async (req, res) => {
 			limit = Number(req.query.limit);
 		}
 		const offers = await Offer.find(filters)
+			.populate("owner", "_id account")
 			.select()
 			.sort(sortPrice)
 			.limit(req.query.page ? limit : 0)
