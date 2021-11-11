@@ -50,7 +50,6 @@ router.post("/user/signup", async (req, res) => {
 				newUser.account.avatar = avatarToUpload;
 				await newUser.save();
 			}
-
 			// send response
 			res.json({
 				id: newUser.id,
