@@ -43,7 +43,7 @@ router.post("/user/signup", async (req, res) => {
 				salt: salt,
 			});
 			// upload avatar to cloudinary
-			if (req.fields.avatar.path) {
+			if (req.fields.avatar) {
 				const avatarToUpload = await cloudinary.uploader.upload(req.files.avatar.path, {
 					folder: `/vinted/users/${newUser.id}/`,
 				});
