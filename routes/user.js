@@ -48,8 +48,8 @@ router.post("/user/signup", async (req, res) => {
 					folder: `/vinted/users/${newUser.id}/`,
 				});
 				newUser.account.avatar = avatarToUpload;
-				await newUser.save();
 			}
+			await newUser.save();
 			// send response
 			res.json({
 				id: newUser.id,
