@@ -136,11 +136,10 @@ router.get("/offers", async (req, res) => {
 		}
 		const offers = await Offer.find(filters)
 			.populate("owner", "_id account")
-			.select()
 			.sort(sortPrice)
 			.limit(req.query.page ? limit : 0)
 			.skip((pageNb - 1) * limit);
-		const count = offers.length;
+		const count = await Offer.countDocuments(filters);
 		res.json({ count: count, offers: offers });
 	} catch (error) {
 		res.status(400).json({ error: error.message });
