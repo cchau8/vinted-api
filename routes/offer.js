@@ -140,7 +140,7 @@ router.get("/offers", async (req, res) => {
 			.sort(sortPrice)
 			.limit(req.query.page ? limit : 0)
 			.skip((pageNb - 1) * limit);
-		const count = await Offer.countDocuments(offers);
+		const count = offfers.length;
 		res.json({ count: count, offers: offers });
 	} catch (error) {
 		res.status(400).json({ error: error.message });
