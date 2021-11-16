@@ -42,16 +42,16 @@ router.post("/offer/publish", isAuthenticated, checkOfferParams, async (req, res
 			folder: `vinted/offers/${newOffer.id}/image`,
 		});
 		newOffer.product_image = productImage;
+		const productPictures = [];
 		if (req.files.pictures.length > 0) {
-			const productPictures = [];
 			for (let i = 0; i < req.files.pictures.length; i++) {
 				const picture = await cloudinary.uploader.upload(req.files.pictures[i].path, {
 					folder: `vinted/offers/${newOffer.id}/pictures`,
 				});
 				productPictures.push(picture);
 			}
-			newOffer.product_pictures = productPictures;
 		}
+		newOffer.product_pictures = productPictures;
 		await newOffer.save();
 		// remove other info such as (hash, salt...) in the response
 		newOffer.owner = req.user.account;
