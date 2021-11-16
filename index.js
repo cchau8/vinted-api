@@ -31,8 +31,11 @@ app.get("/", (req, res) => {
 // import et use des routes
 const userRoutes = require("./routes/user");
 const offerRoutes = require("./routes/offer");
+const paymentRoutes = require("./routes/payment");
+
 app.use(userRoutes);
 app.use(offerRoutes);
+app.use(paymentRoutes);
 
 // Page not found route
 app.all("*", (req, res) => {
