@@ -38,10 +38,20 @@ router.post("/offer/publish", isAuthenticated, checkOfferParams, async (req, res
 			],
 			owner: req.user,
 		});
-		const pictureToUpload = await cloudinary.uploader.upload(req.files.picture.path, {
-			folder: `vinted/offers/${newOffer.id}/`,
+		const productImage = await cloudinary.uploader.upload(req.files.image.path, {
+			folder: `vinted/offers/${newOffer.id}/image`,
 		});
-		newOffer.product_image = pictureToUpload;
+		newOffer.product_image = productImage;
+		if (req.files.pictures.length > 0) {
+			const productPictures = [];
+			for (let i = 0; i < req.files.pictures.length; i++) {
+				const picture = await cloudinary.uploader.upload(req.files.pictures[i].path, {
+					folder: `vinted/offers/${newOffer.id}/pictures`,
+				});
+				productPictures.push(picture);
+			}
+			newOffer.product_pictures = productPictures;
+		}
 		await newOffer.save();
 		// remove other info such as (hash, salt...) in the response
 		newOffer.owner = req.user.account;
@@ -51,6 +61,27 @@ router.post("/offer/publish", isAuthenticated, checkOfferParams, async (req, res
 	}
 });
 
+router.post("/test", async (req, res) => {
+	try {
+		const productImage = await cloudinary.uploader.upload(req.files.image.path, {
+			folder: `test2/image`,
+		});
+		const productPictures = [];
+		for (let i = 0; i < req.files.pictures.length; i++) {
+			const picture = await cloudinary.uploader.upload(req.files.pictures[i].path, {
+				folder: `test2/pictures`,
+			});
+			productPictures.push(picture);
+		}
+
+		res.json({
+			image: productImage,
+			pictures: productPictures,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
 // /offer/edit to edit the offer (need ID of the offer) + (only authenticated user)
 router.put("/offer/edit", isAuthenticated, checkOfferParams, async (req, res) => {
 	try {

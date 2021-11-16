@@ -9,7 +9,7 @@ const cors = require("cors");
 
 // création de l'app et utilisation des modules
 const app = express();
-app.use(formidable());
+app.use(formidable({ multiples: true }));
 app.use(morgan("dev"));
 app.use(cors());
 
@@ -40,6 +40,6 @@ app.all("*", (req, res) => {
 });
 
 // lancement du serveur sur le port 3000
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 4000, () => {
 	console.log("Server has started.");
 });
